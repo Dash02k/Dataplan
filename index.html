@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nova Data — Data Plans</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 16px 35px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f6f8;
+      color: #fff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      color: #20242a;
+      margin-bottom: 22px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .header p {
+      margin: 0;
+      color: #68707a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .plans {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .plan-card {
+      background: #343a45;
+      border-radius: 18px;
+      padding: 24px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.14);
+      border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .data-amount {
+      font-size: 31px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .duration {
+      font-size: 16px;
+      opacity: .82;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    .details-btn {
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .details-btn:hover {
+      opacity: .75;
+    }
+
+    .notice {
+      margin-top: 20px;
+      background: #fff;
+      color: #555;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* Modal */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      color: #222;
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 15px 45px rgba(0,0,0,.25);
+    }
+
+    .close {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      border: 0;
+      background: transparent;
+      font-size: 28px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .modal h2 {
+      margin: 10px 35px 8px 0;
+      font-size: 24px;
+    }
+
+    .modal p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .modal-price {
+      font-size: 27px;
+      font-weight: 800;
+      margin: 15px 0;
+    }
+
+    .continue-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px;
+      background: #343a45;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      opacity: .9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Nova Data Plans</h1>
+      <p>Choose a data plan that fits your needs.</p>
+    </div>
+
+    <div class="plans">
+
+      <div class="plan-card">
+        <div class="badge">New users</div>
+        <div class="data-amount">5GB Data</div>
+        <div class="duration">2-Day Plan</div>
+        <div class="price">Free Trial</div>
+        <button class="details-btn"
+          onclick="showPlan('5GB Data', '2-Day Plan', 'Free Trial')">
+          View details →
+        </button>
+      </div>
+
+      <div class="plan-card">
+        <div class="badge">Light users</div>
+        <div class="data-amount">15GB Data</div>
+        <div class="duration">7-Day Plan</div>
+        <div class="price">USD 0.99</div>
+        <button class="details-btn"
+          onclick="showPlan('15GB Data', '7-Day Plan', 'USD 0.99')">
+          View details →
+        </button>
+      </div>
+
+      <div class="plan-card">
+        <div class="badge">Balanced</div>
+        <div class="data-amount">35GB Data</div>
+        <div class="duration">14-Day Plan</div>
+        <div class="price">USD 1.99</div>
+        <button class="details-btn"
+          onclick="showPlan('35GB Data', '14-Day Plan', 'USD 1.99')">
+          View details →
+        </button>
+      </div>
+
+      <div class="plan-card">
+        <div class="badge">Heavy use</div>
+        <div class="data-amount">50GB Data</div>
+        <div class="duration">21-Day Plan</div>
+        <div class="price">USD 2.99</div>
+        <button class="details-btn"
+          onclick="showPlan('50GB Data', '21-Day Plan', 'USD 2.99')">
+          View details →
+        </button>
+      </div>
+
+      <div class="plan-card">
+        <div class="badge">Most popular</div>
+        <div class="data-amount">Unlimited</div>
+        <div class="duration">30-Day Plan</div>
+        <div class="price">USD 3.99</div>
+        <button class="details-btn"
+          onclick="showPlan('Monthly Unlimited', '30-Day Plan', 'USD 3.99')">
+          View details →
+        </button>
+      </div>
+
+    </div>
+
+    <div class="notice">
+      🔒 Secure checkout. Select a plan to continue to your legitimate
+      payment provider.
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+
+  <div class="modal" id="planModal">
+    <div class="modal-box">
+
+      <button class="close" onclick="closeModal()">×</button>
+
+      <h2 id="modalTitle">Data Plan</h2>
+
+      <p id="modalDuration"></p>
+
+      <div class="modal-price" id="modalPrice"></div>
+
+      <p>
+        This plan provides the data allowance and validity period
+        shown above.
+      </p>
+
+      <button class="continue-btn" onclick="continuePlan()">
+        Continue
+      </button>
+
+    </div>
+  </div>
+
+  <script>
+    let selectedPlan = "";
+
+    function showPlan(name, duration, price) {
+      selectedPlan = name;
+
+      document.getElementById("modalTitle").textContent = name;
+      document.getElementById("modalDuration").textContent = duration;
+      document.getElementById("modalPrice").textContent = price;
+
+      document.getElementById("planModal").classList.add("show");
+    }
+
+    function closeModal() {
+      document.getElementById("planModal").classList.remove("show");
+    }
+
+    function continuePlan() {
+      alert("You selected: " + selectedPlan);
+    }
+
+    document.getElementById("planModal").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+          </html>
