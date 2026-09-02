@@ -1,0 +1,599 @@
+"index.html"
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Plans</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #eef2f7;
+            min-height: 100vh;
+            padding: 40px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            margin: auto;
+            background: #fff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        }
+
+        .title {
+            text-align: center;
+            color: #18386d;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .notice {
+            background: #eef3ff;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            color: #444;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .powered {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .plans-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .plan {
+            background: #343c4a;
+            border-radius: 14px;
+            color: white;
+            padding: 22px;
+            position: relative;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .plan:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,.2);
+        }
+
+        .badge {
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            background: #59647a;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+        }
+
+        .plan-content {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .plan h2 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .days {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .details {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .ecocash-notice {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            color: #2e7d32;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Modal */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .25s;
+            z-index: 9999;
+            padding: 15px;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            width: 400px;
+            max-width: 100%;
+            background: #111d2b;
+            color: white;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: #1d4075;
+            padding: 17px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 22px;
+        }
+
+        .modal-body p {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .phone-input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .error {
+            color: #ff8080;
+            display: none;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+        }
+
+        .btn {
+            flex: 1;
+            height: 44px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cancel {
+            background: #4a5568;
+            color: white;
+        }
+
+        .continue {
+            background: white;
+            color: #111;
+        }
+
+        @media (max-width: 500px) {
+            .title {
+                font-size: 24px;
+            }
+
+            .price {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="title">Data Plans</h1>
+
+    <div class="notice">
+        <strong>Important:</strong>
+        Select a plan and enter your Zimbabwe mobile number to continue.
+    </div>
+
+    <div class="powered">
+        Mobile Data Service
+    </div>
+
+    <div class="plans-wrapper">
+
+        <div class="plan" data-plan="5gb">
+            <span class="badge">New users only</span>
+
+            <div class="plan-content">
+                <h2>5GB Data</h2>
+                <div class="days">2-Day Plan</div>
+                <div class="price">Free Trial</div>
+                <a href="#" class="details">View details →</a>
+            </div>
+        </div>
+
+        <div class="plan" data-plan="15gb">
+            <span class="badge">Light users</span>
+
+            <div class="plan-content">
+                <h2>15GB Data</h2>
+                <div class="days">7-Day Plan</div>
+                <div class="price">USD 0.99</div>
+                <a href="#" class="details">Continue →</a>
+            </div>
+        </div>
+
+        <div class="plan" data-plan="35gb">
+            <span class="badge">Balanced</span>
+
+            <div class="plan-content">
+                <h2>35GB Data</h2>
+                <div class="days">14-Day Plan</div>
+                <div class="price">USD 1.99</div>
+                <a href="#" class="details">Continue →</a>
+            </div>
+        </div>
+
+        <div class="plan" data-plan="50gb">
+            <span class="badge">Heavy use</span>
+
+            <div class="plan-content">
+                <h2>50GB Data</h2>
+                <div class="days">21-Day Plan</div>
+                <div class="price">USD 2.99</div>
+                <a href="#" class="details">Continue →</a>
+            </div>
+        </div>
+
+        <div class="plan" data-plan="monthly">
+            <span class="badge">Most Popular</span>
+
+            <div class="plan-content">
+                <h2>Monthly Unlimited</h2>
+                <div class="days">30-Day Plan</div>
+                <div class="price">USD 3.99</div>
+                <a href="#" class="details">Continue →</a>
+            </div>
+        </div>
+
+        <div class="plan" data-plan="5g">
+            <span class="badge">5G Coverage</span>
+
+            <div class="plan-content">
+                <h2>5G Monthly</h2>
+                <div class="days">30-Day Plan</div>
+                <div class="price">USD 7.99</div>
+                <a href="#" class="details">Continue →</a>
+            </div>
+        </div>
+
+        <div class="ecocash-notice">
+            🔒 Secure checkout. No PIN or OTP is requested on this website.
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PHONE NUMBER MODAL -->
+
+<div id="phoneModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <div class="modal-title">
+                📱 Zimbabwe Mobile Number
+            </div>
+
+            <button class="close-modal" id="closeModal">
+                ×
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <p>
+                Enter the Zimbabwe mobile number associated with your order.
+            </p>
+
+            <input
+                id="phoneNumber"
+                class="phone-input"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="+263 77 123 4567"
+                maxlength="16"
+            >
+
+            <div id="phoneError" class="error">
+                Please enter a valid Zimbabwe mobile number.
+            </div>
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button class="btn cancel" id="cancelButton">
+                Cancel
+            </button>
+
+            <button class="btn continue" id="continueButton">
+                Continue
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let selectedPlan = null;
+
+const phoneModal =
+    document.getElementById("phoneModal");
+
+const phoneInput =
+    document.getElementById("phoneNumber");
+
+const phoneError =
+    document.getElementById("phoneError");
+
+
+/* Open phone-number form */
+
+function openPhoneModal(plan) {
+
+    selectedPlan = plan;
+
+    phoneModal.classList.add("active");
+
+    setTimeout(function () {
+        phoneInput.focus();
+    }, 100);
+}
+
+
+/* Zimbabwe mobile-number validation */
+
+function isValidZimbabweNumber(number) {
+
+    const value =
+        number.replace(/[\s-]/g, "");
+
+    return (
+        /^\+2637\d{8}$/.test(value) ||
+        /^07\d{8}$/.test(value)
+    );
+}
+
+
+/* Convert local format to international format */
+
+function normalizeNumber(number) {
+
+    let value =
+        number.replace(/[\s-]/g, "");
+
+    if (value.startsWith("0")) {
+        value = "+263" + value.substring(1);
+    }
+
+    return value;
+}
+
+
+/* Plan selection */
+
+document.querySelectorAll(".plan").forEach(function(plan) {
+
+    plan.addEventListener("click", function() {
+
+        const planType =
+            this.getAttribute("data-plan");
+
+        openPhoneModal(planType);
+
+    });
+
+});
+
+
+/* Details links */
+
+document.querySelectorAll(".details").forEach(function(link) {
+
+    link.addEventListener("click", function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const plan =
+            this.closest(".plan");
+
+        openPhoneModal(
+            plan.getAttribute("data-plan")
+        );
+
+    });
+
+});
+
+
+/* Continue */
+
+document.getElementById("continueButton")
+    .addEventListener("click", function() {
+
+        const value =
+            phoneInput.value.trim();
+
+        if (!isValidZimbabweNumber(value)) {
+
+            phoneError.style.display = "block";
+
+            return;
+        }
+
+        phoneError.style.display = "none";
+
+        const phone =
+            normalizeNumber(value);
+
+
+        /*
+         * Demo checkout data.
+         *
+         * No PIN or OTP is collected.
+         */
+
+        const checkoutData = {
+
+            phone: phone,
+
+            plan: selectedPlan
+
+        };
+
+
+        localStorage.setItem(
+            "checkoutData",
+            JSON.stringify(checkoutData)
+        );
+
+
+        /*
+         * Replace this ONLY with the verified
+         * deep link supplied by your legitimate
+         * payment/application provider.
+         */
+
+        const APP_DEEP_LINK =
+            "YOUR_OFFICIAL_APP_DEEP_LINK";
+
+
+        if (
+            APP_DEEP_LINK !==
+            "YOUR_OFFICIAL_APP_DEEP_LINK"
+        ) {
+
+            window.location.href =
+                APP_DEEP_LINK;
+
+        } else {
+
+            alert(
+                "Order information saved. Add your official app deep link to continue."
+            );
+
+        }
+
+    });
+
+
+/* Close modal */
+
+document.getElementById("closeModal")
+    .addEventListener("click", function() {
+
+        phoneModal.classList.remove("active");
+
+    });
+
+
+document.getElementById("cancelButton")
+    .addEventListener("click", function() {
+
+        phoneModal.classList.remove("active");
+
+    });
+
+
+/* Close when clicking outside */
+
+phoneModal.addEventListener("click", function(event) {
+
+    if (event.target === phoneModal) {
+
+        phoneModal.classList.remove("active");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+
+GitHub structure
+
+Create your repository like this:
+
+starlink-data-demo/
+└── index.html
+
+Then enable Settings → Pages → Deploy from branch → main → /(root).
+
+One caution: if you are presenting this as a real Starlink/EcoCash/Econet service, make sure you have authorization to use those brands and claims. For a genuine payment integration, the PIN should be entered only inside the authorized payment provider's app/page, not collected by your HTML.
